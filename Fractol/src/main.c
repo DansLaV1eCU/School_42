@@ -41,9 +41,6 @@ void	generate_fract(t_fractal *fract)
 
 int	zoom(int button, int x, int y, t_fractal *fract)
 {
-	double	new_width;
-	double	new_height;
-
 	if (x > WIDTH)
 		return (0);
 	if (y > HEIGHT)
@@ -54,8 +51,6 @@ int	zoom(int button, int x, int y, t_fractal *fract)
 		fract->zoom = 0.8;
 	else
 		return (0);
-	new_width = (fract->max_re - fract->min_re) / fract->zoom;
-	new_height = (fract->max_img - fract->min_img) / fract->zoom;
 	fract->min_re += (x_to_re(fract, x) - fract->min_re) * (1 - 1
 			/ fract->zoom);
 	fract->min_img += (y_to_img(fract, y) - fract->min_img) * (1 - 1

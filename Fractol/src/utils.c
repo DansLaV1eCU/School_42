@@ -56,11 +56,8 @@ int	check_parameters(int argc, char **argv, t_fractal *fract)
 
 void	put_pixel_to_image(t_fractal *fract, t_image *img, int color)
 {
-	unsigned int	clr;
 	int				pixel;
 
-	if (img->bits_per_pixel != 32)
-		clr = mlx_get_color_value(fract->mlx, color);
 	pixel = fract->y * img->size_line + fract->x * 4;
 	if (img->endian == 0)
 	{
