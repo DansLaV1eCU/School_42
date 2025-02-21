@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:07:26 by llupache          #+#    #+#             */
-/*   Updated: 2024/10/27 18:00:42 by llupache         ###   ########.fr       */
+/*   Created: 2024/09/19 18:06:09 by llupache          #+#    #+#             */
+/*   Updated: 2024/09/28 20:20:20 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <./libft.h>
-
-#endif
+int	ft_isalpha(int str)
+{
+	return ((str >= 'A' && str <= 'Z') || (str >= 'a' && str <= 'z'));
+}

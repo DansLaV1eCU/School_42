@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:07:26 by llupache          #+#    #+#             */
-/*   Updated: 2024/10/27 18:00:42 by llupache         ###   ########.fr       */
+/*   Created: 2024/09/19 18:06:09 by llupache          #+#    #+#             */
+/*   Updated: 2024/09/19 18:28:33 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <./libft.h>
+int	ft_isdigit(int d)
+{
+	return (d >= '0' && d <= '9');
+}
 
-#endif
+// int	main(void)
+// {
+// 	char	c;
+
+// 	c = 'f';
+// 	printf("%d", ft_isdigit((int)c));
+// }

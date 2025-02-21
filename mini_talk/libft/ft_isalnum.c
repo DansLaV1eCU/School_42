@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:07:26 by llupache          #+#    #+#             */
-/*   Updated: 2024/10/27 18:00:42 by llupache         ###   ########.fr       */
+/*   Created: 2024/09/19 18:06:09 by llupache          #+#    #+#             */
+/*   Updated: 2024/09/28 19:39:26 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <./libft.h>
+int	ft_isalnum(int str)
+{
+	return ((str >= 'A' && str <= 'Z') || (str >= 'a' && str <= 'z')
+		|| (str >= '0' && str <= '9'));
+}
 
-#endif
+// int	main(void)
+// {
+// 	char	c;
+
+// 	c = '5';
+// 	printf("%d", ft_isalnum((int)c));
+// }

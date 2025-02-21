@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:07:26 by llupache          #+#    #+#             */
-/*   Updated: 2024/10/27 18:00:42 by llupache         ###   ########.fr       */
+/*   Created: 2024/09/27 17:58:58 by llupache          #+#    #+#             */
+/*   Updated: 2024/09/30 19:55:52 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <./libft.h>
+void	*ft_calloc(size_t nitems, size_t size)
+{
+	void	*new;
+	size_t	total_len;
 
-#endif
+	total_len = nitems * size;
+	if ((nitems == 0 && size != 0) || total_len / nitems != size)
+		return (NULL);
+	new = malloc(total_len);
+	if (new == NULL)
+	{
+		return (NULL);
+	}
+	if (total_len != 0)
+		new = ft_memset(new, 0, total_len);
+	return (new);
+}

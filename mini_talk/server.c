@@ -14,22 +14,38 @@
 
 void	signal_handler(int signum)
 {
-	printf("Received %s!/n", str);
-	exit(0);
+	static char c = 0;
+	static int i = 0;
+
+	if (signum == SIGUSR1)
+	{
+		c |= (1 << i);
+		i++;
+	}
+	if (i == 8)
+	{
+		if (c == 0)
+			printf("\n");
+		printf("%c", c);
+		c = 0;
+		i = 0;
+	}
 }
 
-int	main(void)
+int	main()
 {
 	pid_t				pid;
 	struct sigaction	action;
+
+	pid = getpid();
+	
+	printf("%d", pid);
 
 	signal(SIGINT, signal_handler);
 	signal(SIGTERM, signal_handler);
 	signal(SIGUSR1, signal_handler);
 	signal(SIGUSR2, signal_handler);
 
-	pid = getpid();
-	printf("%d", pid);
 	action.sa_handler = signal_handler;
 	sigemptyset(&action.sa_mask);
 	action.sa_flags = 0;
