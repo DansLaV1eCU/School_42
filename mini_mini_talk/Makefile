@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llupache <llupache@student.42.fr>          +#+  +:+       +#+         #
+#    By: alisseye <alisseye@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/24 12:32:35 by llupache          #+#    #+#              #
-#    Updated: 2025/02/22 19:53:26 by llupache         ###   ########.fr        #
+#    Created: 2024/09/24 12:32:35 by alisseye          #+#    #+#              #
+#    Updated: 2024/11/04 19:49:21 by alisseye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,16 @@ CLIENT = client
 SERVER_SRCS = server.c
 CLIENT_SRCS = client.c
 
+# SERVER_BONUS = server_bonus
+# CLIENT_BONUS = client_bonus
+
+# SERVER_BSRCS = server_bonus.c
+# CLIENT_BSRCS = client_bonus.c
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-LIBFT_PATH = ~/libft/
+LIBFT_PATH = ./libft/
 LIBFT = $(LIBFT_PATH)libft.a
 
 all: $(SERVER) $(CLIENT)

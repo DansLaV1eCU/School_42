@@ -109,27 +109,27 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-// int	main(void)
-// {
-// 	char	*res;
-// 	int		fd;
+int	main(void)
+{
+	char	*res;
+	int		fd;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	res = get_next_line(fd);
-// 	printf("%s", res);
-// 	free(res);
-// 	res = get_next_line(fd);
-// 	printf("%s", res);
-// 	free(res);
-// 	res = get_next_line(fd);
-// 	printf("%s", res);
-// 	free(res);
-// 	res = get_next_line(fd);
-// 	printf("%s", res);
-// 	free(res);
-// 	res = get_next_line(fd);
-// 	printf("%s", res);
-// 	free(res);
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("test.txt", O_RDONLY);
+	res = get_next_line(fd);
+	printf("%s", res);
+	free(res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	free(res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	free(res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	free(res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	free(res);
+	close(fd);
+	return (0);
+}

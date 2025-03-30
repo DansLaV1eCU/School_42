@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alisseye <alisseye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:06:47 by llupache          #+#    #+#             */
-/*   Updated: 2025/02/22 20:20:03 by llupache         ###   ########.fr       */
+/*   Created: 2024/10/24 14:19:49 by alisseye          #+#    #+#             */
+/*   Updated: 2024/10/24 18:05:17 by alisseye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	signal_handler(int signum)
+void	ft_sighandle(int signum)
 {
 	static char	c = 0;
 	static int	i = 0;
 
 	if (signum == SIGUSR1)
-	{
 		c |= (1 << i);
-	}
 	i++;
 	if (i == 8)
 	{
 		if (c == 0)
-			ft_printf("\n");
-		ft_printf("%c", c);
-		c = 0;
+			ft_putchar_fd('\n', 1);
+		else
+			ft_putchar_fd(c, 1);
 		i = 0;
+		c = 0;
 	}
 }
 
@@ -37,12 +36,11 @@ int	main(void)
 	pid_t	pid;
 
 	pid = getpid();
-	ft_printf("%d\n", pid);
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
+	ft_putnbr_fd(pid, 1);
+	ft_putchar_fd('\n', 1);
+	signal(SIGUSR1, ft_sighandle);
+	signal(SIGUSR2, ft_sighandle);
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:49:34 by llupache          #+#    #+#             */
-/*   Updated: 2024/11/22 21:22:05 by llupache         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:21:01 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract_ol.h"
 
-void	julia_generate(t_fractal *fract, t_image *img)
+void	julia_generate(t_fractal *fract)
 {
 	int		i;
 	double	temp_x;
@@ -30,13 +30,13 @@ void	julia_generate(t_fractal *fract, t_image *img)
 	}
 	if (i == MAX_ITERATIONS)
 	{
-		put_pixel_to_image(fract, img, 0x000000);
+		put_pixel_to_image(fract, 0x000000);
 	}
 	else
-		put_pixel_to_image(fract, img, fract->color * (i % 255));
+		put_pixel_to_image(fract, fract->color * (i % 255));
 }
 
-void	mandelbrot_generate(t_fractal *fract, t_image *img)
+void	mandelbrot_generate(t_fractal *fract)
 {
 	int		i;
 	double	temp_x;
@@ -56,13 +56,13 @@ void	mandelbrot_generate(t_fractal *fract, t_image *img)
 	}
 	if (i == MAX_ITERATIONS)
 	{
-		put_pixel_to_image(fract, img, 0x000000);
+		put_pixel_to_image(fract, 0x000000);
 	}
 	else
-		put_pixel_to_image(fract, img, fract->color * (i % 255));
+		put_pixel_to_image(fract, fract->color * (i % 255));
 }
 
-void	burning_ship_generate(t_fractal *fract, t_image *img)
+void	burning_ship_generate(t_fractal *fract)
 {
 	int		i;
 	double	temp_x;
@@ -84,10 +84,10 @@ void	burning_ship_generate(t_fractal *fract, t_image *img)
 	}
 	if (i == MAX_ITERATIONS)
 	{
-		put_pixel_to_image(fract, img, 0x000000);
+		put_pixel_to_image(fract, 0x000000);
 	}
 	else
-		put_pixel_to_image(fract, img, fract->color * (i % 255));
+		put_pixel_to_image(fract, fract->color * (i % 255));
 }
 
 int	close_window(void *mlx, void *window)
@@ -99,5 +99,8 @@ int	close_window(void *mlx, void *window)
 int	close_window2(t_fractal *fract)
 {
 	mlx_destroy_window(fract->mlx, fract->window);
+	mlx_destroy_image(fract->mlx, fract->im_fr->img);
+	free(fract->im_fr);
+	free(fract);
 	exit(0);
 }

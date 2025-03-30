@@ -6,7 +6,7 @@
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:49:28 by llupache          #+#    #+#             */
-/*   Updated: 2024/11/22 20:50:51 by llupache         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:17:50 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,24 @@ int	check_parameters(int argc, char **argv, t_fractal *fract)
 	return (1);
 }
 
-void	put_pixel_to_image(t_fractal *fract, t_image *img, int color)
+void	put_pixel_to_image(t_fractal *fract, int color)
 {
 	int				pixel;
 
-	pixel = fract->y * img->size_line + fract->x * 4;
-	if (img->endian == 0)
+	pixel = fract->y * fract->im_fr->size_line + fract->x * 4;
+	if (fract->im_fr->endian == 0)
 	{
-		img->addr[pixel + 3] = (color >> 24);
-		img->addr[pixel + 2] = (color >> 16) & 0xFF;
-		img->addr[pixel + 1] = (color >> 8) & 0xFF;
-		img->addr[pixel + 0] = (color) & 0xFF;
+		fract->im_fr->addr[pixel + 3] = (color >> 24);
+		fract->im_fr->addr[pixel + 2] = (color >> 16) & 0xFF;
+		fract->im_fr->addr[pixel + 1] = (color >> 8) & 0xFF;
+		fract->im_fr->addr[pixel + 0] = (color) & 0xFF;
 	}
 	else
 	{
-		img->addr[pixel + 0] = (color >> 24);
-		img->addr[pixel + 1] = (color >> 16) & 0xFF;
-		img->addr[pixel + 2] = (color >> 8) & 0xFF;
-		img->addr[pixel + 3] = (color) & 0xFF;
+		fract->im_fr->addr[pixel + 0] = (color >> 24);
+		fract->im_fr->addr[pixel + 1] = (color >> 16) & 0xFF;
+		fract->im_fr->addr[pixel + 2] = (color >> 8) & 0xFF;
+		fract->im_fr->addr[pixel + 3] = (color) & 0xFF;
 	}
 }
 

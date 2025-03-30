@@ -6,7 +6,7 @@
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:01:30 by llupache          #+#    #+#             */
-/*   Updated: 2024/11/22 20:55:24 by llupache         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:24:54 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	generate_fract(t_fractal *fract)
 {
-	t_image	img;
+	t_image	*image;
 
-	img.img = mlx_new_image(fract->mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.size_line,
-			&img.endian);
+	image = malloc(sizeof(t_image));
+	fract->im_fr = image;
+	fract->im_fr->img = mlx_new_image(fract->mlx, WIDTH, HEIGHT);
+	fract->im_fr->addr = mlx_get_data_addr(fract->im_fr->img,
+			&fract->im_fr->bits_per_pixel, &fract->im_fr->size_line,
+			&fract->im_fr->endian);
 	fract->y = 0;
 	while (fract->y < HEIGHT)
 	{
@@ -26,16 +29,18 @@ void	generate_fract(t_fractal *fract)
 		while (fract->x < WIDTH)
 		{
 			if (ft_strncmp(fract->name, "Julia", 6) == 0)
-				julia_generate(fract, &img);
+				julia_generate(fract);
 			else if (ft_strncmp(fract->name, "Mandelbrot", 11) == 0)
-				mandelbrot_generate(fract, &img);
+				mandelbrot_generate(fract);
 			else if (ft_strncmp(fract->name, "Burning_ship", 6) == 0)
-				burning_ship_generate(fract, &img);
+				burning_ship_generate(fract);
 			fract->x++;
 		}
 		fract->y++;
 	}
-	mlx_put_image_to_window(fract->mlx, fract->window, img.img, 0, 0);
+	mlx_put_image_to_window(fract->mlx, fract->window, fract->im_fr->img, 0, 0);
+	mlx_destroy_image(fract->mlx, fract->im_fr->img);
+	free(fract->im_fr);
 	put_strings(fract);
 }
 
@@ -111,26 +116,25 @@ int	main(int argc, char **argv)
 {
 	void		*mlx;
 	void		*mlx_win;
-	t_fractal	fract;
+	t_fractal	*fract;
 
-	if (!check_parameters(argc, argv, &fract))
-	{
-		write(1, "Available fractals:\n-Julia Re Img\n", 35);
-		return (write(1, "-Mandelbrot\n-Burning_ship\n", 27));
-	}
+	fract = malloc(sizeof(fract));
+	if (!check_parameters(argc, argv, fract))
+		return (ft_printf("Available fractals:\n-Julia Re Img \
+		-Mandelbrot\n-Burning_ship\n"));
 	mlx = mlx_init();
 	if (!mlx)
 		return (0);
 	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, argv[1]);
 	if (!mlx_win)
 		close_window(mlx, mlx_win);
-	fract.mlx = mlx;
-	fract.window = mlx_win;
-	initialise(&fract);
-	generate_fract(&fract);
-	mlx_mouse_hook(fract.window, zoom, &fract);
-	mlx_key_hook(fract.window, key_pressed, &fract);
-	mlx_hook(fract.window, 17, 1, close_window2, &fract);
+	fract->mlx = mlx;
+	fract->window = mlx_win;
+	initialise(fract);
+	generate_fract(fract);
+	mlx_mouse_hook(fract->window, zoom, fract);
+	mlx_key_hook(fract->window, key_pressed, fract);
+	mlx_hook(fract->window, 17, 1, close_window2, fract);
 	mlx_loop(mlx);
 	return (0);
 }

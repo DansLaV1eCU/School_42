@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 16:07:26 by llupache          #+#    #+#             */
-/*   Updated: 2025/02/22 19:56:06 by llupache         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:20:40 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
 # include "../../libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+struct		s_stack
+{
+	s_stack	*next;
+}			t_stack;
 
 #endif
