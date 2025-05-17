@@ -6,13 +6,13 @@
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 16:06:47 by llupache          #+#    #+#             */
-/*   Updated: 2025/02/22 20:20:03 by llupache         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:16:42 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	signal_handler(int signum)
+void	add_char(int signum, struct string_info *info)
 {
 	static char	c = 0;
 	static int	i = 0;
@@ -32,14 +32,31 @@ void	signal_handler(int signum)
 	}
 }
 
+void	handler(int signum, siginfo_t *info, void *context)
+{
+	static struct t_info information;
+	char	*str;
+
+	str = (char *)ft_calloc(1024, 8);
+	information.str = str;
+	information.index = 0;
+}
+
 int	main(void)
 {
-	pid_t	pid;
+	pid_t				pid;
+	struct sigaction	st;
 
+	memset(&sa, 0, sizeof(sa));
 	pid = getpid();
 	ft_printf("%d\n", pid);
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
+	st.sa_sigaction = handler;
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
+	sigemptyset(&(st.sa_mask));
+	sigaddset(st.sa_mask, SIGUSR1);
+	sigaddset(st.sa_mask, SIGUSR2);
+	sigaction(SIGUSR1, &st, NULL);
+	sigaction(SIGUSR2, &st, NULL);
 	while (1)
 	{
 		pause();
