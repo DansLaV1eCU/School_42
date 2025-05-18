@@ -6,13 +6,47 @@
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 16:06:47 by llupache          #+#    #+#             */
-/*   Updated: 2025/05/17 21:16:42 by llupache         ###   ########.fr       */
+/*   Updated: 2025/05/18 21:27:09 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	add_char(int signum, struct string_info *info)
+int	find_index(char *message)
+{
+	int	i;
+
+	i = 0;
+	while (message[i])
+		i++;
+	return (i);
+}
+
+void	make_len(int signum, int pid, int *len, char **message)
+{
+	static char	c = 0;
+	static int	i = 0;
+
+	if (signum == SIGUSR1)
+		c |= (1 << i);
+	i++;
+	if (i == 8)
+	{
+		if (c == 0)
+		{
+			*len = ft_atoi(*message);
+			free(*message);
+			*message = NULL;
+		}
+		if (*message)
+			(*message)[find_index(*message)] = c;
+		c = 0;
+		i = 0;
+	}
+	kill(pid, SIGUSR1);
+}
+
+void	add_char(int signum, char **message, int pid, int *len)
 {
 	static char	c = 0;
 	static int	i = 0;
@@ -25,41 +59,54 @@ void	add_char(int signum, struct string_info *info)
 	if (i == 8)
 	{
 		if (c == 0)
-			ft_printf("\n");
-		ft_printf("%c", c);
+		{
+			ft_printf("\nYou got a new message: %s\n", *message);
+			free(*message);
+			*message = NULL;
+			*len = 0;
+		}
+		if (*message)
+			(*message)[find_index(*message)] = c;
 		c = 0;
 		i = 0;
 	}
+	usleep(50);
+	kill(pid, SIGUSR1);
 }
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
-	static struct t_info information;
-	char	*str;
+	static char	*message = NULL;
+	static int	len = 0;
 
-	str = (char *)ft_calloc(1024, 8);
-	information.str = str;
-	information.index = 0;
+	(void)context;
+	if (len == 0)
+	{
+		if (message == NULL)
+			message = (char *)ft_calloc(1024, 8);
+		make_len(signum, info->si_pid, &len, &message);
+	}
+	else
+	{
+		if (message == NULL)
+			message = (char *)ft_calloc(len, 8);
+		add_char(signum, &message, info->si_pid, &len);
+	}
 }
 
 int	main(void)
 {
 	pid_t				pid;
-	struct sigaction	st;
+	struct sigaction	sg;
 
-	memset(&sa, 0, sizeof(sa));
+	ft_memset(&sg, 0, sizeof(sg));
 	pid = getpid();
 	ft_printf("%d\n", pid);
-	st.sa_sigaction = handler;
-	sa.sa_flags = SA_SIGINFO | SA_RESTART;
-	sigemptyset(&(st.sa_mask));
-	sigaddset(st.sa_mask, SIGUSR1);
-	sigaddset(st.sa_mask, SIGUSR2);
-	sigaction(SIGUSR1, &st, NULL);
-	sigaction(SIGUSR2, &st, NULL);
+	sg.sa_sigaction = handler;
+	sg.sa_flags = SA_SIGINFO | SA_RESTART;
+	sigaction(SIGUSR1, &sg, NULL);
+	sigaction(SIGUSR2, &sg, NULL);
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }

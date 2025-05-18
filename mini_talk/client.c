@@ -6,33 +6,26 @@
 /*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 16:06:47 by llupache          #+#    #+#             */
-/*   Updated: 2025/05/17 20:54:46 by llupache         ###   ########.fr       */
+/*   Updated: 2025/05/18 21:27:39 by llupache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int		feedback = 1;
+int		g_feedback = 1;
 
 void	wait_feedback(void)
 {
-	int time;
-
-	time = 10;
-	while (feedback == 0 && time--)
+	while (g_feedback == 0)
 	{
-		usleep(1000);
-	}
-	if (feedback == 0)
-	{
-		ft_printf("Feedback ne byl poluchen");
-		exit(0);
+		pause();
 	}
 }
 
-void change_feedback(void)
+void	change_feedback(int signum)
 {
-	feedback = 1;
+	if (signum == SIGUSR1)
+		g_feedback = 1;
 }
 
 void	send_message(int pid, char *str)
@@ -46,13 +39,12 @@ void	send_message(int pid, char *str)
 		i = 0;
 		while (i < 8)
 		{
-			if (str[j] & (1 << i))
+			if (str[j] & (1 << i++))
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			
+			g_feedback = 0;
 			wait_feedback();
-			i++;
 		}
 		j++;
 	}
@@ -60,21 +52,25 @@ void	send_message(int pid, char *str)
 	while (j++ < 8)
 	{
 		kill(pid, SIGUSR2);
-		feedback = 0;
+		g_feedback = 0;
 		wait_feedback();
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	int					pid;
+	int		pid;
+	char	*str;
 
 	if (argc != 3)
 		return (ft_printf("Error"));
 	pid = ft_atoi(argv[1]);
 	if (pid <= 0)
 		return (ft_printf("Error"));
-	signal(SIGUSR2, change_feedback);
+	signal(SIGUSR1, change_feedback);
+	str = ft_itoa(ft_strlen(argv[2]));
+	send_message(pid, str);
+	free(str);
 	send_message(pid, argv[2]);
 	return (0);
 }
