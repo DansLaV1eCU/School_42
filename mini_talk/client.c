@@ -47,7 +47,6 @@ int	main(int argc, char **argv)
 	if (argc != 3)
 		return (ft_printf("Error"));
 	pid = ft_atoi(argv[1]);
-	ft_printf("%d", pid);
 	if (pid <= 0)
 		return (ft_printf("Error"));
 	send_message(pid, argv[2]);

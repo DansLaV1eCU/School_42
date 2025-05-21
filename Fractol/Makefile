@@ -17,8 +17,8 @@ LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
 # Includes
 INC			=	-I ./includes/\
-				-I .danslav1e/libft/\
-				-I .danslav1e/minilibx-linux/
+				-I .llupache/libft/\
+				-I .llupache/minilibx-linux/
 
 # Sources
 SRC_PATH	=	src/
