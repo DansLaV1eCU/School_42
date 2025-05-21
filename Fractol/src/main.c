@@ -16,6 +16,11 @@ void	generate_fract(t_fractal *fract)
 {
 	t_image	*image;
 
+	if (fract->im_fr)
+    {
+        mlx_destroy_image(fract->mlx, fract->im_fr->img);
+        free(fract->im_fr);
+    }
 	image = malloc(sizeof(t_image));
 	fract->im_fr = image;
 	fract->im_fr->img = mlx_new_image(fract->mlx, WIDTH, HEIGHT);
@@ -39,8 +44,6 @@ void	generate_fract(t_fractal *fract)
 		fract->y++;
 	}
 	mlx_put_image_to_window(fract->mlx, fract->window, fract->im_fr->img, 0, 0);
-	mlx_destroy_image(fract->mlx, fract->im_fr->img);
-	free(fract->im_fr);
 	put_strings(fract);
 }
 
@@ -97,8 +100,7 @@ int	key_pressed(int keycode, t_fractal *fract)
 {
 	if (keycode == 65307)
 	{
-		mlx_destroy_window(fract->mlx, fract->window);
-		exit(0);
+		close_window2(fract);
 	}
 	if (keycode == 114)
 	{
@@ -118,16 +120,26 @@ int	main(int argc, char **argv)
 	void		*mlx_win;
 	t_fractal	*fract;
 
-	fract = malloc(sizeof(fract));
+	fract = malloc(sizeof(t_fractal));
 	if (!check_parameters(argc, argv, fract))
-		return (ft_printf("Available fractals:\n-Julia Re Img \
+	{
+		free(fract);
+		return (printf("Available fractals:\n-Julia Re Img \
 		-Mandelbrot\n-Burning_ship\n"));
+	}	
 	mlx = mlx_init();
 	if (!mlx)
-		return (0);
+	{
+		free(fract);
+		return (1);
+	}
 	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, argv[1]);
 	if (!mlx_win)
+	{
+		mlx_destroy_display(mlx);
+		free(fract);
 		close_window(mlx, mlx_win);
+	}	
 	fract->mlx = mlx;
 	fract->window = mlx_win;
 	initialise(fract);

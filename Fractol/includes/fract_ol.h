@@ -21,8 +21,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define HEIGHT 1080
-# define WIDTH 1920
+# define HEIGHT 120
+# define WIDTH 200
 # define MAX_ITERATIONS 100
 
 typedef struct s_image

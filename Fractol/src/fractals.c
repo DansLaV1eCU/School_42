@@ -99,8 +99,13 @@ int	close_window(void *mlx, void *window)
 int	close_window2(t_fractal *fract)
 {
 	mlx_destroy_window(fract->mlx, fract->window);
-	mlx_destroy_image(fract->mlx, fract->im_fr->img);
-	free(fract->im_fr);
+	if (fract->im_fr)
+    {
+        mlx_destroy_image(fract->mlx, fract->im_fr->img);
+        free(fract->im_fr);
+    }
+	mlx_destroy_display(fract->mlx);
+	free(fract->mlx);
 	free(fract);
 	exit(0);
 }
