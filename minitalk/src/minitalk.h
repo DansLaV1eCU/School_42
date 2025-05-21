@@ -3,20 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llupache <llupache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dtereshc <dtereshc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:07:26 by llupache          #+#    #+#             */
-/*   Updated: 2025/05/18 17:55:03 by llupache         ###   ########.fr       */
+/*   Created: 2025/03/04 17:43:25 by dt                #+#    #+#             */
+/*   Updated: 2025/05/18 14:14:19 by dtereshc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
+# include "../libs/libft/libft.h"
+# include "../libs/libftprintf/ft_printf.h"
 # include <signal.h>
-# include "../../libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+
+extern int	g_marker;
+
+typedef struct s_stack
+{
+	char	*message;
+	char	cur_chr;
+	size_t	index;
+	size_t	bit_count;
+}			t_stack;
 
 #endif
